@@ -8,6 +8,9 @@
 ehthumbs.db
 Thumbs.db
 
+# Private
+java.pizzeria/src/main/resources/application.properties
+
 # Compiled class file
 *.class
 
