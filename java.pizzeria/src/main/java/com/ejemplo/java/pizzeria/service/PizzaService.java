@@ -27,4 +27,8 @@ public class PizzaService {
         //return this.jdbcTemplate.query("Select * from pizza", new BeanPropertyRowMapper<>(PizzaEntity.class)); /*Permite crear consultas sql y convertilas en clases java*/
         return this.pizzaRepository.findAll();
     }
+
+    public PizzaEntity get(int idPizza){
+        return this.pizzaRepository.findById(idPizza).orElse(null);
+    }
 }
