@@ -1,5 +1,6 @@
 package com.ejemplo.java.pizzeria.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,10 +35,12 @@ public class OrderEntity {
     @Column(name = "additional_notes", length = 200)
     private String additionalNotes;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)/*LAZY es para que no cargue la información si no se utiliza*/
     @JoinColumn(name = "id_customer", referencedColumnName = "id_customer", insertable = false, updatable = false)
+    @JsonIgnore
     private CustomerEntity customer;
 
-    @OneToMany(mappedBy = "order")/*Usar nombre del atributo con la tabla que tiene relación*/
+    /*Usar nombre del atributo con la tabla que tiene relación*/
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)/*EAGER es para cuando se quiera recuperar un order entity también traiga esta relación*/
     private List<OrderItemEntity> items;
 }

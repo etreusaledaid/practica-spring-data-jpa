@@ -1,5 +1,6 @@
 package com.ejemplo.java.pizzeria.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class OrderItemEntity {
 
     @ManyToOne/**Relación uno a muchos*/
     @JoinColumn(name = "id_order", referencedColumnName = "id_order", insertable = false, updatable = false)
+    @JsonIgnore /**Funciona para que ignore esta propiedad cuando se serializa el objeto y no se quede en un bucle*/
     private OrderEntity order;
 
     @OneToOne/**Relación uno a uno*/
