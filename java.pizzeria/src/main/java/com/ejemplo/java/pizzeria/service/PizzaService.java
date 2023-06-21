@@ -28,6 +28,38 @@ public class PizzaService {
         return this.pizzaRepository.findAll();
     }
 
+    public List<PizzaEntity> getAvailable(){
+        //this.pizzaRepository.countByVeganTrue();
+        return this.pizzaRepository.findAllByAvailableTrueOrderByPrice();
+    }
+    public List<PizzaEntity> getVegan(){
+        return this.pizzaRepository.findAllByVeganTrueOrderByName();
+    }
+
+    public List<PizzaEntity> getName(){
+        return this.pizzaRepository.findAllByAvailableTrueOrderByName();
+    }
+
+    public PizzaEntity getByName(String name){
+        return this.pizzaRepository.findAllByAvailableTrueAndNameIgnoreCase(name);
+    }
+
+    public PizzaEntity getByNameOptional(String name){
+        return this.pizzaRepository.findFirstByAvailableTrueAndNameIgnoreCase(name).orElseThrow(()->new RuntimeException("La pizza no existe"));
+    }
+
+    public List<PizzaEntity> getWith(String ingredient){
+        return this.pizzaRepository.findAllByAvailableTrueAndDescriptionContainingIgnoreCase(ingredient);
+    }
+
+    public List<PizzaEntity> getWithout(String ingredient){
+        return this.pizzaRepository.findAllByAvailableTrueAndDescriptionNotContainingIgnoreCase(ingredient);
+    }
+
+    public List<PizzaEntity> getCheapestPizzas(double price){
+        return this.pizzaRepository.findTop3ByAvailableTrueAndPriceLessThanEqualOrderByPriceAsc(price);
+    }
+
     public PizzaEntity get(int idPizza){
         return this.pizzaRepository.findById(idPizza).orElse(null);
     }

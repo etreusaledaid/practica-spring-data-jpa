@@ -28,6 +28,45 @@ public class PizzaController {
         return ResponseEntity.ok(this.pizzaService.get(idPizza));
     }
 
+    @GetMapping("/available")
+    public ResponseEntity<List<PizzaEntity>> getAvailable(){
+        return ResponseEntity.ok(this.pizzaService.getAvailable());
+    }
+    @GetMapping("/vegan")
+    public ResponseEntity<List<PizzaEntity>> getVegan(){
+        return ResponseEntity.ok(this.pizzaService.getVegan());
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<List<PizzaEntity>> getName(){
+        return ResponseEntity.ok(this.pizzaService.getName());
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<PizzaEntity> getByName(@PathVariable String name){
+        return ResponseEntity.ok(this.pizzaService.getByName(name));
+    }
+
+    @GetMapping("/optional/{name}")
+    public ResponseEntity<PizzaEntity> getByNameOptional(@PathVariable String name){
+        return ResponseEntity.ok(this.pizzaService.getByNameOptional(name));
+    }
+
+    @GetMapping("/with/{ingredient}")
+    public ResponseEntity<List<PizzaEntity>> getWith(@PathVariable String ingredient){
+        return ResponseEntity.ok(this.pizzaService.getWith(ingredient));
+    }
+
+    @GetMapping("/without/{ingredient}")
+    public ResponseEntity<List<PizzaEntity>> getWithout(@PathVariable String ingredient){
+        return ResponseEntity.ok(this.pizzaService.getWithout(ingredient));
+    }
+
+    @GetMapping("/cheapest/{price}")
+    public ResponseEntity<List<PizzaEntity>> getCheapestPizzas(@PathVariable Double price){
+        return ResponseEntity.ok(this.pizzaService.getCheapestPizzas(price));
+    }
+
     @PostMapping
     public ResponseEntity<PizzaEntity> add(@RequestBody PizzaEntity pizza){
         if(pizza.getIdPizza() == null || this.pizzaService.exists(pizza.getIdPizza())) {
