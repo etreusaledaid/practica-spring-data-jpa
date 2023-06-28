@@ -1,31 +1,40 @@
 package com.ejemplo.java.pizzeria.service;
 
 import com.ejemplo.java.pizzeria.persistence.entity.PizzaEntity;
+import com.ejemplo.java.pizzeria.persistence.repository.PizzaPagSortRepository;
 import com.ejemplo.java.pizzeria.persistence.repository.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Service/**Es un Bean de spring*/
 public class PizzaService {
     //private final JdbcTemplate jdbcTemplate;
     private final PizzaRepository pizzaRepository;
+    private final PizzaPagSortRepository pizzaPagSortRepository; /*Inyectando interface*/
 
     @Autowired/**Se encarga de la inyección de dependencias*/
     /*public PizzaService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }*/
-    public PizzaService(PizzaRepository pizzaRepository) {
+    public PizzaService(PizzaRepository pizzaRepository, PizzaPagSortRepository pizzaPagSortRepository) {
         this.pizzaRepository = pizzaRepository;
+        this.pizzaPagSortRepository = pizzaPagSortRepository;
     }
 
     /*Este metodo retorna lo que llama la clase PizzaEntity*/
-    public List<PizzaEntity> getAll(){
-        //return this.jdbcTemplate.query("Select * from pizza", new BeanPropertyRowMapper<>(PizzaEntity.class)); /*Permite crear consultas sql y convertilas en clases java*/
-        return this.pizzaRepository.findAll();
+    //public List<PizzaEntity> getAll(){
+        /*return this.jdbcTemplate.query("Select * from pizza", new BeanPropertyRowMapper<>(PizzaEntity.class)); /*Permite crear consultas sql y convertilas en clases java*/
+        //return this.pizzaRepository.findAll();
+    //}
+
+    public Page<PizzaEntity> getAll(int page, int elements){
+        PageRequest pageRequest = PageRequest.of(page, elements);
+        return this.pizzaPagSortRepository.findAll(pageRequest);
     }
 
     public List<PizzaEntity> getAvailable(){
