@@ -42,5 +42,6 @@ public class OrderEntity {
 
     /*Usar nombre del atributo con la tabla que tiene relación*/
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)/*EAGER es para cuando se quiera recuperar un order entity también traiga esta relación*/
+    @OrderBy("price ASC")/*Con este parametro de hibernate se puede definir como ordenar el arreglo del order entity*/
     private List<OrderItemEntity> items;
 }
