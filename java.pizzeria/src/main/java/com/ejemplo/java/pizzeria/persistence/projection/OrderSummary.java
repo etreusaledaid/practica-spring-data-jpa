@@ -2,7 +2,7 @@ package com.ejemplo.java.pizzeria.persistence.projection;
 
 import java.time.LocalDateTime;
 
-/**Query personalizados*/
+/**Query personalizados (Projections)*/
 public interface OrderSummary {
     Integer getIdOrder();
     String getCustomerName();
