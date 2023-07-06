@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().and()
                 .authorizeHttpRequests()
-                /*Crear JWT cuando un usuario inicie sesión*/
+                /*Creando un JWT cuando un usuario inicie sesión*/
                 .requestMatchers("/api/auth/**").permitAll()
                 /*Aplicando requestMatchers*/
                 //.requestMatchers(HttpMethod.GET,"/api/pizzas/**").permitAll() //Los * representan los niveles de la url
@@ -70,7 +70,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(admin,customer);
     }*/
 
-    /*Creando JWT cuando un usuario inicie sesión*/
+    /*Creando un JWT cuando un usuario inicie sesión*/
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();

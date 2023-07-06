@@ -31,4 +31,18 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<UserRoleEntity> roles;
+
+    /*Creando un JWT cuando un usuario inicie sesión*/
+    /*Implementando el metodo toString para ver todos los atributos del entity en el System.out.printl de UserSecurityService*/
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", locked=" + locked +
+                ", disabled=" + disabled +
+                ", roles=" + roles +
+                '}';
+    }
 }
