@@ -1,5 +1,6 @@
 package com.ejemplo.java.pizzeria.web.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -7,18 +8,25 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 /*Control de métodos con Method Security*/
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
+    /*Aplicando filtro en la configuración*/
+    private final JwtFilter jwtFilter;
+
+    @Autowired
+    public SecurityConfig(JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
+
+    /*------------------------------------*/
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         /*http.authorizeHttpRequests().anyRequest().permitAll();*/ //Permitir todas las conexiones
@@ -30,6 +38,9 @@ public class SecurityConfig {
                 /*Creando la configuración de CORS*/
                 .csrf().disable()
                 .cors().and()
+                /*Aplicando un filtro en la configuración*/
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                /*---------------------------------------*/
                 .authorizeHttpRequests()
                 /*Creando un JWT cuando un usuario inicie sesión*/
                 .requestMatchers("/api/auth/**").permitAll()
@@ -48,7 +59,10 @@ public class SecurityConfig {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                //.httpBasic();
+        /*Aplicando un filtro en la configuración*/
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        /*----------------------------------*/
         return http.build();
     }
 
