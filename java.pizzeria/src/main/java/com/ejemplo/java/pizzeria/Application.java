@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories
+@EnableJpaRepositories /**Funciona para que pueda crear la base de datos*/
 @EnableJpaAuditing /**Auditoría con Spring Data*/
 public class Application {
 

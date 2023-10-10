@@ -31,7 +31,7 @@ public class UserSecurityService implements UserDetailsService {
         String[] roles = userEntity.getRoles().stream().map(UserRoleEntity::getRole).toArray(String[]::new);
 
         /*Verificar que la ejecución llego al servicio*/
-        System.out.println(userEntity);
+        //System.out.println(userEntity);
         /*-----------------------------*/
 
         return User.builder()

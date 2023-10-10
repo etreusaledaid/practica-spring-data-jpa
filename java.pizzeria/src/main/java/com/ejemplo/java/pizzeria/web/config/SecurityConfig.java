@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 /*Creando un JWT cuando un usuario inicie sesión*/
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/users/**").permitAll()
                 /*Aplicando requestMatchers*/
                 //.requestMatchers(HttpMethod.GET,"/api/pizzas/**").permitAll() //Los * representan los niveles de la url
                 .requestMatchers(HttpMethod.GET,"/api/pizzas/**").hasAnyRole("ADMIN","CUSTOMER")
